@@ -49,8 +49,8 @@ namespace BookStore.Web.Controllers
         // GET: BookGenres/Create
         public IActionResult Create()
         {
-            ViewData["IdBook"] = new SelectList(_context.Books, "Id", "Id");
-            ViewData["IdGenre"] = new SelectList(_context.Genre, "Id", "Id");
+            ViewData["IdBook"] = new SelectList(_context.Books, "Id", "Title");
+            ViewData["IdGenre"] = new SelectList(_context.Genre, "Id", "Name");
             return View();
         }
 
