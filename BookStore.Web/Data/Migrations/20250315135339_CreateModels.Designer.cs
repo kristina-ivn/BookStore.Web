@@ -4,6 +4,7 @@ using BookStore.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250315135339_CreateModels")]
+    partial class CreateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,10 @@ namespace BookStore.Web.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdAuthor")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("ReleaseBook")
@@ -304,13 +310,9 @@ namespace BookStore.Web.Data.Migrations
 
             modelBuilder.Entity("BookStore.Web.Data.Entity.Book", b =>
                 {
-                    b.HasOne("BookStore.Web.Data.Entity.Author", "Author")
+                    b.HasOne("BookStore.Web.Data.Entity.Author", null)
                         .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("BookStore.Web.Data.Entity.BookGenre", b =>
