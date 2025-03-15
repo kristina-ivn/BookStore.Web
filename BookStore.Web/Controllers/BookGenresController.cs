@@ -27,9 +27,9 @@ namespace BookStore.Web.Controllers
         }
 
         // GET: BookGenres/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdGenre, int? IdBook)
         {
-            if (id == null)
+            if (IdBook == null||IdGenre==null)
             {
                 return NotFound();
             }
@@ -37,7 +37,8 @@ namespace BookStore.Web.Controllers
             var bookGenre = await _context.BookGenres
                 .Include(b => b.Book)
                 .Include(b => b.Genre)
-                .FirstOrDefaultAsync(m => m.IdGenre == id);
+                .Where(g=>g.IdGenre==IdGenre)
+                .FirstOrDefaultAsync(b => b.IdBook == IdBook);
             if (bookGenre == null)
             {
                 return NotFound();
@@ -73,14 +74,14 @@ namespace BookStore.Web.Controllers
         }
 
         // GET: BookGenres/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdGenre, int? IdBook)
         {
-            if (id == null)
+            if (IdBook == null||IdGenre==null)
             {
                 return NotFound();
             }
 
-            var bookGenre = await _context.BookGenres.FindAsync(id);
+            var bookGenre = await _context.BookGenres.Where(g=>g.IdGenre==IdGenre).FirstAsync(b => b.IdBook == IdBook);
             if (bookGenre == null)
             {
                 return NotFound();
@@ -95,9 +96,9 @@ namespace BookStore.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdBook,IdGenre")] BookGenre bookGenre)
+        public async Task<IActionResult> Edit(int IdBook,int IdGenre, [Bind("IdBook,IdGenre")] BookGenre bookGenre)
         {
-            if (id != bookGenre.IdGenre)
+            if (IdGenre != bookGenre.IdGenre)
             {
                 return NotFound();
             }
@@ -128,9 +129,9 @@ namespace BookStore.Web.Controllers
         }
 
         // GET: BookGenres/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdGenre, int? IdBook)
         {
-            if (id == null)
+            if (IdGenre==null||IdBook==null)
             {
                 return NotFound();
             }
@@ -138,7 +139,8 @@ namespace BookStore.Web.Controllers
             var bookGenre = await _context.BookGenres
                 .Include(b => b.Book)
                 .Include(b => b.Genre)
-                .FirstOrDefaultAsync(m => m.IdGenre == id);
+                .Where(g=>g.IdGenre==IdGenre)
+                .FirstOrDefaultAsync(b => b.IdBook == IdBook);
             if (bookGenre == null)
             {
                 return NotFound();

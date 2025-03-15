@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Genre.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { item.IdBook, item.IdGenre}) |
+                    @Html.ActionLink("Details", "Details", new { item.IdBook, item.IdGenre }) |
+                    @Html.ActionLink("Delete", "Delete", new { item.IdBook, item.IdGenre })
             </td>
         </tr>
 }
